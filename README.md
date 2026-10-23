@@ -5,6 +5,9 @@
 ![Status](https://img.shields.io/badge/Status-Verified-brightgreen)
 ![Domain](https://img.shields.io/badge/Domain-Digital%20Logic%20Design-purple)
 
+> 🌐 **Interactive Web Demo:** Test the logic states, switch channels, and view real-time transient waveforms directly in your browser:  
+> 👉 **[Launch Live Simulator](https://abishal-afk.github.io/LTspice-digital-circuit-simulation/)**
+
 A gate-level **4×1 combinational multiplexer** designed and simulated using **LTspice**. The project models an industrial telemetry data selector that aggregates multiple independent sensor signals (such as temperature, pressure, vibration, and liquid level) into a single shared monitoring line, significantly reducing microcontroller pin consumption, cabling complexity, and signal routing overhead.
 
 ---
