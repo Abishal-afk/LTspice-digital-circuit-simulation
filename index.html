@@ -16,6 +16,7 @@
             --accent-red: #ef4444;
             --text-main: #f1f5f9;
             --text-muted: #94a3b8;
+            --wire-dim: #1e293b;
         }
 
         * {
@@ -49,7 +50,6 @@
             padding: 2.5rem 0 1.5rem;
             text-align: center;
             border-bottom: 1px solid var(--card-border);
-            position: relative;
         }
 
         .badges {
@@ -75,7 +75,7 @@
         .badge.blue { border-color: var(--accent-blue); color: var(--accent-blue); }
 
         h1 {
-            font-size: 2.5rem;
+            font-size: 2.2rem;
             font-weight: 800;
             background: linear-gradient(135deg, #fff 0%, #94a3b8 100%);
             -webkit-background-clip: text;
@@ -85,7 +85,7 @@
 
         .subtitle {
             color: var(--text-muted);
-            font-size: 1.1rem;
+            font-size: 1.05rem;
             max-width: 750px;
             margin: 0 auto 1.5rem;
         }
@@ -137,12 +137,12 @@
             display: grid;
             grid-template-columns: 1fr;
             gap: 2rem;
-            margin: 2.5rem 0;
+            margin: 2rem 0;
         }
 
         @media (min-width: 992px) {
             .grid-2 {
-                grid-template-columns: 1.1fr 0.9fr;
+                grid-template-columns: 1.15fr 0.85fr;
             }
         }
 
@@ -165,7 +165,7 @@
         }
 
         .card-title {
-            font-size: 1.15rem;
+            font-size: 1.1rem;
             font-weight: 700;
             color: var(--text-main);
             display: flex;
@@ -182,6 +182,116 @@
             border: 1px solid rgba(16, 185, 129, 0.3);
         }
 
+        /* Circuit Map Card Styling */
+        .circuit-map-card {
+            background: #060911;
+            border: 1px solid #1e293b;
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: inset 0 0 40px rgba(0, 0, 0, 0.5);
+        }
+
+        .circuit-map-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .circuit-map-title {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1rem;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            color: #f8fafc;
+        }
+
+        .live-tag {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+            color: #10b981;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .live-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #10b981;
+            box-shadow: 0 0 10px #10b981;
+            animation: pulse-dot 1.5s infinite;
+        }
+
+        @keyframes pulse-dot {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.4; transform: scale(0.85); }
+        }
+
+        .svg-container {
+            width: 100%;
+            background: #080c14;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            padding: 1rem 0;
+        }
+
+        svg text {
+            user-select: none;
+        }
+
+        .wire {
+            stroke: #1e293b;
+            stroke-width: 2.5;
+            transition: stroke 0.3s ease, filter 0.3s ease;
+        }
+
+        .wire.active-path {
+            stroke: #10b981 !important;
+            filter: drop-shadow(0 0 4px rgba(16, 185, 129, 0.8));
+            stroke-dasharray: 6 3;
+            animation: dash 1s linear infinite;
+        }
+
+        .wire.ctrl-wire.active-ctrl {
+            stroke: #00f2fe !important;
+            filter: drop-shadow(0 0 4px rgba(0, 242, 254, 0.8));
+        }
+
+        @keyframes dash {
+            to { stroke-dashoffset: -18; }
+        }
+
+        .map-legend {
+            display: flex;
+            gap: 1.5rem;
+            margin-top: 1rem;
+            font-size: 0.85rem;
+            color: #94a3b8;
+            flex-wrap: wrap;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .legend-bar {
+            width: 18px;
+            height: 4px;
+            border-radius: 2px;
+        }
+
+        /* Controls */
         .controls-section {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -197,7 +307,7 @@
         }
 
         .control-group-title {
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             text-transform: uppercase;
             letter-spacing: 0.05em;
             color: var(--text-muted);
@@ -287,60 +397,6 @@
             box-shadow: 0 0 10px var(--accent-green);
         }
 
-        .interactive-circuit {
-            position: relative;
-            background: #06090e;
-            border: 1px solid var(--card-border);
-            border-radius: 12px;
-            padding: 1.5rem;
-            display: flex;
-            flex-direction: column;
-            gap: 1.25rem;
-        }
-
-        .circuit-channel-row {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0.6rem 1rem;
-            border-radius: 8px;
-            background: rgba(255, 255, 255, 0.02);
-            border: 1px solid transparent;
-            transition: all 0.2s ease;
-        }
-
-        .circuit-channel-row.selected {
-            background: rgba(0, 242, 254, 0.06);
-            border-color: rgba(0, 242, 254, 0.3);
-            box-shadow: 0 0 15px rgba(0, 242, 254, 0.1);
-        }
-
-        .channel-info {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-        }
-
-        .channel-tag {
-            font-size: 0.75rem;
-            background: rgba(255, 255, 255, 0.06);
-            padding: 0.2rem 0.5rem;
-            border-radius: 4px;
-        }
-
-        .routing-indicator {
-            font-size: 0.8rem;
-            color: var(--text-muted);
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .routing-indicator.routed {
-            color: var(--accent-cyan);
-            font-weight: 600;
-        }
-
         .circuit-output-box {
             background: linear-gradient(145deg, rgba(16, 185, 129, 0.05), rgba(0, 242, 254, 0.05));
             border: 1px solid rgba(0, 242, 254, 0.2);
@@ -349,7 +405,6 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-top: 0.5rem;
         }
 
         .output-voltage {
@@ -359,18 +414,27 @@
         }
 
         .plot-container {
-            position: relative;
             background: #000;
             border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 12px;
             overflow: hidden;
-            margin-top: 1rem;
+            margin-bottom: 1rem;
         }
 
         canvas {
             display: block;
             width: 100%;
-            height: 220px;
+            height: 200px;
+        }
+
+        .formula-box {
+            background: rgba(0, 0, 0, 0.3);
+            border-left: 3px solid var(--accent-cyan);
+            padding: 0.75rem 1rem;
+            margin-bottom: 1rem;
+            border-radius: 0 8px 8px 0;
+            font-size: 0.8rem;
+            color: #cbd5e1;
         }
 
         .table-responsive {
@@ -393,7 +457,6 @@
             background: rgba(255, 255, 255, 0.03);
             color: var(--text-muted);
             font-weight: 600;
-            text-transform: uppercase;
             font-size: 0.75rem;
             letter-spacing: 0.05em;
         }
@@ -402,56 +465,6 @@
             background: rgba(0, 242, 254, 0.1);
             color: var(--accent-cyan);
             font-weight: 600;
-        }
-
-        .formula-box {
-            background: rgba(0, 0, 0, 0.3);
-            border-left: 3px solid var(--accent-cyan);
-            padding: 0.75rem 1rem;
-            margin: 1rem 0;
-            border-radius: 0 8px 8px 0;
-            font-size: 0.85rem;
-            color: #cbd5e1;
-        }
-
-        .team-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 1rem;
-            margin-top: 1rem;
-        }
-
-        .team-member {
-            background: rgba(255, 255, 255, 0.02);
-            border: 1px solid var(--card-border);
-            border-radius: 8px;
-            padding: 0.75rem 1rem;
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-        }
-
-        .avatar {
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, var(--accent-blue), var(--accent-cyan));
-            color: #050b14;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 700;
-            font-size: 0.85rem;
-        }
-
-        .member-details h4 {
-            font-size: 0.9rem;
-            margin-bottom: 0.1rem;
-        }
-
-        .member-details p {
-            font-size: 0.75rem;
-            color: var(--text-muted);
         }
 
         footer {
@@ -488,7 +501,7 @@
             </a>
             <a href="https://github.com/Abishal-afk/LTspice-digital-circuit-simulation" target="_blank" class="btn btn-secondary">
                 <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
-                GitHub Repository
+                GitHub Repo
             </a>
         </div>
     </div>
@@ -496,19 +509,11 @@
 
 <main class="container">
     <div class="grid grid-2">
-        <!-- Interactive Simulator -->
+        <!-- Interactive Controls & Live Circuit Map -->
         <div class="card">
-            <div class="card-header">
-                <span class="card-title">
-                    <svg width="20" height="20" fill="none" stroke="var(--accent-cyan)" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
-                    Interactive Logic Simulator
-                </span>
-                <span class="status-pill">Active Mode</span>
-            </div>
-
-            <!-- Controls -->
+            <!-- Controls Section -->
             <div class="controls-section">
-                <!-- Address Select Lines -->
+                <!-- Select Lines -->
                 <div class="control-group">
                     <div class="control-group-title">Address Select Lines</div>
                     <div class="toggle-switch-row">
@@ -533,32 +538,32 @@
                     </div>
                 </div>
 
-                <!-- Channel Inputs -->
+                <!-- Input Lines -->
                 <div class="control-group">
                     <div class="control-group-title">Sensor Logic States</div>
                     <div class="toggle-switch-row">
-                        <span class="toggle-label mono">V1 (Ch 1 - Temp)</span>
+                        <span class="toggle-label mono">V1 (Temp)</span>
                         <label class="switch">
                             <input type="checkbox" id="toggle-v1" checked>
                             <span class="slider"></span>
                         </label>
                     </div>
                     <div class="toggle-switch-row">
-                        <span class="toggle-label mono">V2 (Ch 2 - Pres)</span>
+                        <span class="toggle-label mono">V2 (Pres)</span>
                         <label class="switch">
                             <input type="checkbox" id="toggle-v2" checked>
                             <span class="slider"></span>
                         </label>
                     </div>
                     <div class="toggle-switch-row">
-                        <span class="toggle-label mono">V3 (Ch 3 - Vib)</span>
+                        <span class="toggle-label mono">V3 (Vib)</span>
                         <label class="switch">
                             <input type="checkbox" id="toggle-v3" checked>
                             <span class="slider"></span>
                         </label>
                     </div>
                     <div class="toggle-switch-row">
-                        <span class="toggle-label mono">V4 (Ch 4 - Level)</span>
+                        <span class="toggle-label mono">V4 (Level)</span>
                         <label class="switch">
                             <input type="checkbox" id="toggle-v4">
                             <span class="slider"></span>
@@ -567,56 +572,116 @@
                 </div>
             </div>
 
-            <!-- Interactive Signal Flow -->
-            <div class="interactive-circuit">
-                <div class="circuit-channel-row" id="row-ch1">
-                    <div class="channel-info">
-                        <span class="indicator" id="ind-v1"></span>
-                        <span class="mono">Channel 1 (V1)</span>
-                        <span class="channel-tag">Temperature</span>
+            <!-- Signal Multiplexing Circuit Map -->
+            <div class="circuit-map-card">
+                <div class="circuit-map-header">
+                    <div class="circuit-map-title">
+                        <svg width="18" height="18" fill="none" stroke="#00f2fe" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                        SIGNAL MULTIPLEXING CIRCUIT MAP
                     </div>
-                    <div class="routing-indicator" id="route-ch1">DISCONNECTED</div>
-                </div>
-                <div class="circuit-channel-row" id="row-ch2">
-                    <div class="channel-info">
-                        <span class="indicator" id="ind-v2"></span>
-                        <span class="mono">Channel 2 (V2)</span>
-                        <span class="channel-tag">Pressure</span>
+                    <div class="live-tag">
+                        <span class="live-dot"></span> Live Path Tracking
                     </div>
-                    <div class="routing-indicator" id="route-ch2">DISCONNECTED</div>
-                </div>
-                <div class="circuit-channel-row" id="row-ch3">
-                    <div class="channel-info">
-                        <span class="indicator" id="ind-v3"></span>
-                        <span class="mono">Channel 3 (V3)</span>
-                        <span class="channel-tag">Vibration</span>
-                    </div>
-                    <div class="routing-indicator" id="route-ch3">DISCONNECTED</div>
-                </div>
-                <div class="circuit-channel-row" id="row-ch4">
-                    <div class="channel-info">
-                        <span class="indicator" id="ind-v4"></span>
-                        <span class="mono">Channel 4 (V4)</span>
-                        <span class="channel-tag">Liquid Level</span>
-                    </div>
-                    <div class="routing-indicator" id="route-ch4">DISCONNECTED</div>
                 </div>
 
-                <!-- Multiplexer Output Node -->
-                <div class="circuit-output-box">
-                    <div>
-                        <div style="font-size: 0.75rem; text-transform: uppercase; color: var(--text-muted); font-weight: 700;">Routed Node Output (out)</div>
-                        <div class="output-voltage mono" id="txt-voltage">5.00 V</div>
-                        <div style="font-size: 0.75rem; color: var(--text-muted);">Stabilized via 10 kΩ pull-down (R1)</div>
+                <div class="svg-container">
+                    <svg viewBox="0 0 620 320" width="100%" height="100%" style="max-width: 600px;">
+                        <!-- Vertical Control Lines S0 and S1 -->
+                        <text x="300" y="30" fill="#64748b" font-size="9" font-family="JetBrains Mono" text-anchor="middle">S0 (V5)</text>
+                        <rect x="290" y="38" width="20" height="15" rx="3" fill="#0f172a" stroke="#334155" />
+                        <text x="300" y="49" fill="#94a3b8" font-size="8" font-family="JetBrains Mono" text-anchor="middle">INV</text>
+                        <line x1="285" y1="40" x2="285" y2="235" class="wire ctrl-wire" id="wire-s0-raw" />
+                        <line x1="300" y1="53" x2="300" y2="235" class="wire ctrl-wire" id="wire-s0-inv" />
+
+                        <text x="345" y="30" fill="#64748b" font-size="9" font-family="JetBrains Mono" text-anchor="middle">S1 (V6)</text>
+                        <rect x="335" y="38" width="20" height="15" rx="3" fill="#0f172a" stroke="#334155" />
+                        <text x="345" y="49" fill="#94a3b8" font-size="8" font-family="JetBrains Mono" text-anchor="middle">INV</text>
+                        <line x1="330" y1="40" x2="330" y2="235" class="wire ctrl-wire" id="wire-s1-raw" />
+                        <line x1="345" y1="53" x2="345" y2="235" class="wire ctrl-wire" id="wire-s1-inv" />
+
+                        <!-- Row 1: V1 (A3) -->
+                        <circle cx="95" cy="80" r="11" fill="#082f49" stroke="#0284c7" stroke-width="1.5" />
+                        <text x="95" y="84" fill="#38bdf8" font-size="9" font-family="JetBrains Mono" font-weight="700" text-anchor="middle">V1</text>
+                        <line x1="106" y1="80" x2="185" y2="80" class="wire" id="wire-in-1" />
+                        <rect x="185" y="68" width="34" height="24" rx="6" fill="#0f172a" stroke="#334155" stroke-width="1.2" />
+                        <text x="202" y="83" fill="#94a3b8" font-size="9" font-family="JetBrains Mono" text-anchor="middle">A3</text>
+                        <line x1="219" y1="80" x2="415" y2="80" class="wire" id="wire-out-1" />
+
+                        <!-- Row 2: V2 (A4) -->
+                        <circle cx="95" cy="125" r="11" fill="#1e1b4b" stroke="#6366f1" stroke-width="1.5" />
+                        <text x="95" y="129" fill="#818cf8" font-size="9" font-family="JetBrains Mono" font-weight="700" text-anchor="middle">V2</text>
+                        <line x1="106" y1="125" x2="185" y2="125" class="wire" id="wire-in-2" />
+                        <rect x="185" y="113" width="34" height="24" rx="6" fill="#0f172a" stroke="#334155" stroke-width="1.2" />
+                        <text x="202" y="128" fill="#94a3b8" font-size="9" font-family="JetBrains Mono" text-anchor="middle">A4</text>
+                        <line x1="219" y1="125" x2="400" y2="125" class="wire" id="wire-out-2" />
+
+                        <!-- Row 3: V3 (A5) -->
+                        <circle cx="95" cy="170" r="11" fill="#451a03" stroke="#f59e0b" stroke-width="1.5" />
+                        <text x="95" y="174" fill="#fbbf24" font-size="9" font-family="JetBrains Mono" font-weight="700" text-anchor="middle">V3</text>
+                        <line x1="106" y1="170" x2="185" y2="170" class="wire" id="wire-in-3" />
+                        <rect x="185" y="158" width="34" height="24" rx="6" fill="#0f172a" stroke="#334155" stroke-width="1.2" />
+                        <text x="202" y="173" fill="#94a3b8" font-size="9" font-family="JetBrains Mono" text-anchor="middle">A5</text>
+                        <line x1="219" y1="170" x2="400" y2="170" class="wire" id="wire-out-3" />
+
+                        <!-- Row 4: V4 (A6) -->
+                        <circle cx="95" cy="215" r="11" fill="#3b0764" stroke="#c084fc" stroke-width="1.5" />
+                        <text x="95" y="219" fill="#e9d5ff" font-size="9" font-family="JetBrains Mono" font-weight="700" text-anchor="middle">V4</text>
+                        <line x1="106" y1="215" x2="185" y2="215" class="wire" id="wire-in-4" />
+                        <rect x="185" y="203" width="34" height="24" rx="6" fill="#0f172a" stroke="#334155" stroke-width="1.2" />
+                        <text x="202" y="218" fill="#94a3b8" font-size="9" font-family="JetBrains Mono" text-anchor="middle">A6</text>
+                        <line x1="219" y1="215" x2="415" y2="215" class="wire" id="wire-out-4" />
+
+                        <!-- OR Gate Block -->
+                        <path d="M 395 70 C 415 120, 415 175, 395 225 C 445 225, 465 170, 470 148 C 465 125, 445 70, 395 70 Z" fill="#0c1729" stroke="#00f2fe" stroke-width="1.5" id="or-gate-body" />
+                        <text x="420" y="152" fill="#38bdf8" font-size="10" font-family="JetBrains Mono" font-weight="700">OR</text>
+
+                        <!-- Output line to out -->
+                        <line x1="470" y1="148" x2="525" y2="148" class="wire" id="wire-final" />
+                        <circle cx="525" cy="148" r="8" fill="#10b981" id="circle-out-status" />
+                        <text x="540" y="152" fill="#10b981" font-size="11" font-family="JetBrains Mono" font-weight="700" id="txt-out-label">out</text>
+
+                        <!-- Pull down resistor R1 -->
+                        <line x1="495" y1="148" x2="495" y2="170" stroke="#334155" stroke-width="1.5" />
+                        <rect x="490" y="170" width="10" height="20" fill="#0f172a" stroke="#64748b" stroke-width="1.2" />
+                        <text x="507" y="183" fill="#64748b" font-size="8" font-family="JetBrains Mono">R1 10k</text>
+                        <line x1="495" y1="190" x2="495" y2="200" stroke="#334155" stroke-width="1.5" />
+                        <!-- Ground symbol -->
+                        <line x1="488" y1="200" x2="502" y2="200" stroke="#64748b" stroke-width="1.5" />
+                        <line x1="491" y1="203" x2="499" y2="203" stroke="#64748b" stroke-width="1.5" />
+                        <line x1="493" y1="206" x2="497" y2="206" stroke="#64748b" stroke-width="1.5" />
+                    </svg>
+                </div>
+
+                <div class="map-legend">
+                    <div class="legend-item">
+                        <div class="legend-bar" style="background: #10b981;"></div>
+                        <span>Active Signal Path</span>
                     </div>
-                    <div style="text-align: right;">
-                        <span class="status-pill" id="txt-selected-ch">Channel 1 Selected</span>
+                    <div class="legend-item">
+                        <div class="legend-bar" style="background: #00f2fe;"></div>
+                        <span>Enabled Control Line</span>
                     </div>
+                    <div class="legend-item">
+                        <div class="legend-bar" style="background: #1e293b;"></div>
+                        <span>Isolated / Low</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Output Box -->
+            <div class="circuit-output-box">
+                <div>
+                    <div style="font-size: 0.75rem; text-transform: uppercase; color: var(--text-muted); font-weight: 700;">Routed Node Output (out)</div>
+                    <div class="output-voltage mono" id="txt-voltage">5.00 V</div>
+                    <div style="font-size: 0.75rem; color: var(--text-muted);">Stabilized via 10 kΩ pull-down (R1)</div>
+                </div>
+                <div style="text-align: right;">
+                    <span class="status-pill" id="txt-selected-ch">Channel 1 Selected</span>
                 </div>
             </div>
         </div>
 
-        <!-- Waveform and Logic Matrix -->
+        <!-- Scope & Truth Table -->
         <div class="card">
             <div class="card-header">
                 <span class="card-title">
@@ -626,16 +691,14 @@
                 <span class="mono" style="font-size: 0.75rem; color: var(--text-muted);">Real-Time Probe</span>
             </div>
 
-            <!-- Canvas Scope -->
             <div class="plot-container">
-                <canvas id="scopeCanvas" width="500" height="220"></canvas>
+                <canvas id="scopeCanvas" width="500" height="200"></canvas>
             </div>
 
             <div class="formula-box mono">
                 Out = (V1 · S1' · S0') + (V2 · S1' · S0) + (V3 · S1 · S0') + (V4 · S1 · S0)
             </div>
 
-            <!-- Truth Table -->
             <div class="table-responsive">
                 <table>
                     <thead>
@@ -643,7 +706,6 @@
                             <th>S1 (V6)</th>
                             <th>S0 (V5)</th>
                             <th>Active Input</th>
-                            <th>Logic Expression</th>
                             <th>Output (V)</th>
                         </tr>
                     </thead>
@@ -652,97 +714,28 @@
                             <td class="mono">0 (0V)</td>
                             <td class="mono">0 (0V)</td>
                             <td class="mono">Channel 1 (V1)</td>
-                            <td class="mono">V1 · S1' · S0'</td>
                             <td class="mono" id="tbl-out-0">5.0 V</td>
                         </tr>
                         <tr id="tbl-row-1">
                             <td class="mono">0 (0V)</td>
                             <td class="mono">1 (5V)</td>
                             <td class="mono">Channel 2 (V2)</td>
-                            <td class="mono">V2 · S1' · S0</td>
                             <td class="mono" id="tbl-out-1">5.0 V</td>
                         </tr>
                         <tr id="tbl-row-2">
                             <td class="mono">1 (5V)</td>
                             <td class="mono">0 (0V)</td>
                             <td class="mono">Channel 3 (V3)</td>
-                            <td class="mono">V3 · S1 · S0'</td>
                             <td class="mono" id="tbl-out-2">5.0 V</td>
                         </tr>
                         <tr id="tbl-row-3">
                             <td class="mono">1 (5V)</td>
                             <td class="mono">1 (5V)</td>
                             <td class="mono">Channel 4 (V4)</td>
-                            <td class="mono">V4 · S1 · S0</td>
                             <td class="mono" id="tbl-out-3">0.0 V</td>
                         </tr>
                     </tbody>
                 </table>
-            </div>
-        </div>
-    </div>
-
-    <!-- Circuit Architecture & Verification Details -->
-    <div class="card" style="margin-bottom: 2.5rem;">
-        <div class="card-header">
-            <span class="card-title">
-                <svg width="20" height="20" fill="none" stroke="var(--accent-green)" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
-                Hardware Architecture & LTspice Diagnostics
-            </span>
-        </div>
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; font-size: 0.9rem; color: var(--text-muted);">
-            <div>
-                <h4 style="color: var(--text-main); margin-bottom: 0.5rem;">Gate-Level Array</h4>
-                <p>Constructed via LTspice Special Functions library comprising two NOT inverters (A1, A2) for select complementation, four 3-input AND gates (A3–A6) for decoding address lines, and cascaded OR gates (A7–A9) to form the output bus.</p>
-            </div>
-            <div>
-                <h4 style="color: var(--text-main); margin-bottom: 0.5rem;">Floating Node & Impedance Resolution</h4>
-                <p>Initial transient runs exhibited nano-volt (`nV`) floating node anomalies (n006). A 10 kΩ pull-down resistor (R1) was connected between node `out` and GND, clamping leakage states and establishing sharp 0V/5V digital levels.</p>
-            </div>
-            <div>
-                <h4 style="color: var(--text-main); margin-bottom: 0.5rem;">Industrial Context</h4>
-                <p>Reduces pin demand on industrial PLCs/microcontrollers from $N$ channels down to a single analogue/digital telemetry pin plus $\log_2(N)$ binary select lines, preventing cabling weight and cross-talk on factory floors.</p>
-            </div>
-        </div>
-    </div>
-
-    <!-- Team Members -->
-    <div class="card">
-        <div class="card-header">
-            <span class="card-title">
-                <svg width="20" height="20" fill="none" stroke="var(--accent-blue)" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
-                Project Contributors
-            </span>
-            <span style="font-size: 0.8rem; color: var(--text-muted);">Prathyusha Engineering College</span>
-        </div>
-        <div class="team-grid">
-            <div class="team-member">
-                <div class="avatar">AP</div>
-                <div class="member-details">
-                    <h4>Abishal</h4>
-                    <p class="mono">111425104002</p>
-                </div>
-            </div>
-            <div class="team-member">
-                <div class="avatar">AB</div>
-                <div class="member-details">
-                    <h4>Abishek</h4>
-                    <p class="mono">111425104003</p>
-                </div>
-            </div>
-            <div class="team-member">
-                <div class="avatar">RP</div>
-                <div class="member-details">
-                    <h4>Rithesh</h4>
-                    <p class="mono">111425104008</p>
-                </div>
-            </div>
-            <div class="team-member">
-                <div class="avatar">GV</div>
-                <div class="member-details">
-                    <h4>Govardhan</h4>
-                    <p class="mono">111425104006</p>
-                </div>
             </div>
         </div>
     </div>
@@ -755,7 +748,6 @@
 </footer>
 
 <script>
-    // State management
     const state = {
         s1: false,
         s0: false,
@@ -766,7 +758,6 @@
         outVoltage: 5.0
     };
 
-    // DOM Elements
     const toggleS1 = document.getElementById('toggle-s1');
     const toggleS0 = document.getElementById('toggle-s0');
     const toggleV1 = document.getElementById('toggle-v1');
@@ -776,28 +767,29 @@
 
     const indS1 = document.getElementById('ind-s1');
     const indS0 = document.getElementById('ind-s0');
-    const indV1 = document.getElementById('ind-v1');
-    const indV2 = document.getElementById('ind-v2');
-    const indV3 = document.getElementById('ind-v3');
-    const indV4 = document.getElementById('ind-v4');
 
-    const rowCh1 = document.getElementById('row-ch1');
-    const rowCh2 = document.getElementById('row-ch2');
-    const rowCh3 = document.getElementById('row-ch3');
-    const rowCh4 = document.getElementById('row-ch4');
+    const wireS0Raw = document.getElementById('wire-s0-raw');
+    const wireS0Inv = document.getElementById('wire-s0-inv');
+    const wireS1Raw = document.getElementById('wire-s1-raw');
+    const wireS1Inv = document.getElementById('wire-s1-inv');
 
-    const routeCh1 = document.getElementById('route-ch1');
-    const routeCh2 = document.getElementById('route-ch2');
-    const routeCh3 = document.getElementById('route-ch3');
-    const routeCh4 = document.getElementById('route-ch4');
+    const wireIn1 = document.getElementById('wire-in-1');
+    const wireOut1 = document.getElementById('wire-out-1');
+    const wireIn2 = document.getElementById('wire-in-2');
+    const wireOut2 = document.getElementById('wire-out-2');
+    const wireIn3 = document.getElementById('wire-in-3');
+    const wireOut3 = document.getElementById('wire-out-3');
+    const wireIn4 = document.getElementById('wire-in-4');
+    const wireOut4 = document.getElementById('wire-out-4');
 
+    const wireFinal = document.getElementById('wire-final');
+    const circleOut = document.getElementById('circle-out-status');
+    const txtOutLabel = document.getElementById('txt-out-label');
     const txtVoltage = document.getElementById('txt-voltage');
     const txtSelectedCh = document.getElementById('txt-selected-ch');
 
-    // Canvas Osciloscope setup
     const canvas = document.getElementById('scopeCanvas');
     const ctx = canvas.getContext('2d');
-    let waveOffset = 0;
     const historyData = new Array(80).fill(5.0);
 
     function updateSimulation() {
@@ -808,86 +800,81 @@
         state.v3 = toggleV3.checked;
         state.v4 = toggleV4.checked;
 
-        // Indicators
         indS1.className = 'indicator ' + (state.s1 ? 'active' : '');
         indS0.className = 'indicator ' + (state.s0 ? 'active' : '');
-        indV1.className = 'indicator ' + (state.v1 ? 'active' : '');
-        indV2.className = 'indicator ' + (state.v2 ? 'active' : '');
-        indV3.className = 'indicator ' + (state.v3 ? 'active' : '');
-        indV4.className = 'indicator ' + (state.v4 ? 'active' : '');
 
-        // Address decoding: (S1, S0)
+        // Control line highlighting
+        wireS0Raw.className = 'wire ctrl-wire ' + (state.s0 ? 'active-ctrl' : '');
+        wireS0Inv.className = 'wire ctrl-wire ' + (!state.s0 ? 'active-ctrl' : '');
+        wireS1Raw.className = 'wire ctrl-wire ' + (state.s1 ? 'active-ctrl' : '');
+        wireS1Inv.className = 'wire ctrl-wire ' + (!state.s1 ? 'active-ctrl' : '');
+
+        // Channel index: S1 S0
         let selectedIndex = (state.s1 ? 2 : 0) + (state.s0 ? 1 : 0);
         let selectedValue = false;
         let channelName = '';
 
-        // Reset rows
-        [rowCh1, rowCh2, rowCh3, rowCh4].forEach(r => r.classList.remove('selected'));
-        [routeCh1, routeCh2, routeCh3, routeCh4].forEach(r => {
-            r.className = 'routing-indicator mono';
-            r.innerText = 'DISCONNECTED';
+        // Reset all signal paths
+        [wireIn1, wireOut1, wireIn2, wireOut2, wireIn3, wireOut3, wireIn4, wireOut4].forEach(w => {
+            w.classList.remove('active-path');
         });
 
-        // Highlight selected
         if (selectedIndex === 0) {
-            rowCh1.classList.add('selected');
-            routeCh1.classList.add('routed');
-            routeCh1.innerText = 'ROUTED TO OUT ▶';
+            wireIn1.classList.add('active-path');
+            wireOut1.classList.add('active-path');
             selectedValue = state.v1;
             channelName = 'Channel 1 (V1 - Temperature)';
         } else if (selectedIndex === 1) {
-            rowCh2.classList.add('selected');
-            routeCh2.classList.add('routed');
-            routeCh2.innerText = 'ROUTED TO OUT ▶';
+            wireIn2.classList.add('active-path');
+            wireOut2.classList.add('active-path');
             selectedValue = state.v2;
             channelName = 'Channel 2 (V2 - Pressure)';
         } else if (selectedIndex === 2) {
-            rowCh3.classList.add('selected');
-            routeCh3.classList.add('routed');
-            routeCh3.innerText = 'ROUTED TO OUT ▶';
+            wireIn3.classList.add('active-path');
+            wireOut3.classList.add('active-path');
             selectedValue = state.v3;
             channelName = 'Channel 3 (V3 - Vibration)';
         } else if (selectedIndex === 3) {
-            rowCh4.classList.add('selected');
-            routeCh4.classList.add('routed');
-            routeCh4.innerText = 'ROUTED TO OUT ▶';
+            wireIn4.classList.add('active-path');
+            wireOut4.classList.add('active-path');
             selectedValue = state.v4;
             channelName = 'Channel 4 (V4 - Liquid Level)';
         }
 
-        // Determine voltage
         state.outVoltage = selectedValue ? 5.0 : 0.0;
         txtVoltage.innerText = state.outVoltage.toFixed(2) + ' V';
         txtVoltage.style.color = selectedValue ? 'var(--accent-cyan)' : 'var(--text-muted)';
-        txtSelectedCh.innerText = channelName + ' Selected';
+        txtSelectedCh.innerText = channelName;
 
-        // Update Truth Table dynamic values
+        if (selectedValue) {
+            wireFinal.classList.add('active-path');
+            circleOut.setAttribute('fill', '#10b981');
+            txtOutLabel.setAttribute('fill', '#10b981');
+        } else {
+            wireFinal.classList.remove('active-path');
+            circleOut.setAttribute('fill', '#334155');
+            txtOutLabel.setAttribute('fill', '#64748b');
+        }
+
+        // Update truth table
         document.getElementById('tbl-out-0').innerText = state.v1 ? '5.0 V' : '0.0 V';
         document.getElementById('tbl-out-1').innerText = state.v2 ? '5.0 V' : '0.0 V';
         document.getElementById('tbl-out-2').innerText = state.v3 ? '5.0 V' : '0.0 V';
         document.getElementById('tbl-out-3').innerText = state.v4 ? '5.0 V' : '0.0 V';
 
         for (let i = 0; i < 4; i++) {
-            const row = document.getElementById('tbl-row-' + i);
-            if (i === selectedIndex) {
-                row.className = 'active-row';
-            } else {
-                row.className = '';
-            }
+            document.getElementById('tbl-row-' + i).className = (i === selectedIndex) ? 'active-row' : '';
         }
     }
 
-    // Attach event listeners
-    [toggleS1, toggleS0, toggleV1, toggleV2, toggleV3, toggleV4].forEach(item => {
-        item.addEventListener('change', updateSimulation);
+    [toggleS1, toggleS0, toggleV1, toggleV2, toggleV3, toggleV4].forEach(el => {
+        el.addEventListener('change', updateSimulation);
     });
 
-    // Draw Osciloscope Grid and Trace
     function renderScope() {
         ctx.fillStyle = '#060a10';
         ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-        // Draw Subgrid
         ctx.strokeStyle = 'rgba(255, 255, 255, 0.05)';
         ctx.lineWidth = 1;
 
@@ -907,13 +894,11 @@
             ctx.stroke();
         }
 
-        // Push latest sample to history
         historyData.push(state.outVoltage);
         if (historyData.length > canvas.width) {
             historyData.shift();
         }
 
-        // Draw waveform trace
         ctx.strokeStyle = '#00f2fe';
         ctx.lineWidth = 2.5;
         ctx.shadowColor = '#00f2fe';
@@ -921,36 +906,38 @@
 
         ctx.beginPath();
         for (let i = 0; i < historyData.length; i++) {
-            // Map 0V -> y=180, 5V -> y=40
             const v = historyData[i];
-            const y = 180 - (v / 5.0) * 140;
+            const y = 160 - (v / 5.0) * 120;
             const x = (i / historyData.length) * canvas.width;
 
-            if (i === 0) {
-                ctx.moveTo(x, y);
-            } else {
-                ctx.lineTo(x, y);
-            }
+            if (i === 0) ctx.moveTo(x, y);
+            else ctx.lineTo(x, y);
         }
         ctx.stroke();
-        ctx.shadowBlur = 0; // Reset shadow
+        ctx.shadowBlur = 0;
 
-        // Labels
         ctx.fillStyle = '#64748b';
         ctx.font = '10px JetBrains Mono';
         ctx.fillText('5.0V', 10, 45);
-        ctx.fillText('2.5V', 10, 115);
-        ctx.fillText('0.0V', 10, 185);
+        ctx.fillText('0.0V', 10, 165);
         ctx.fillText('V(out) - TRANSIENT TRACE', canvas.width - 160, 25);
 
         requestAnimationFrame(renderScope);
     }
 
-    // Initialize
     updateSimulation();
     renderScope();
 </script>
 
 </body>
 </html>
-```[span_0](start_span)[span_0](end_span)[span_1](start_span)[span_1](end_span)[span_2](start_span)[span_2](end_span)[span_3](start_span)[span_3](end_span)[span_4](start_span)[span_4](end_span)[span_5](start_span)[span_5](end_span)
+```[span_7](start_span)[span_7](end_span)[span_8](start_span)[span_8](end_span)[span_9](start_span)[span_9](end_span)[span_10](start_span)[span_10](end_span)[span_11](start_span)[span_11](end_span)[span_12](start_span)[span_12](end_span)[span_13](start_span)[span_13](end_span)
+
+---
+
+### Step 3: Save Changes
+
+1. Scroll to the bottom of the page[span_14](start_span)[span_14](end_span).
+2. In the commit summary box, type:
+   ```text
+   Add interactive Signal Multiplexing Circuit Map
